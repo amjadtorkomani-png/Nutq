@@ -1,0 +1,6 @@
+base        (280 feats)  CV bal 0.909 falseRej 0.166 miss 0.016 | TEST bal 0.929 falseRej 0.125 miss 0.016 | voices with falseRej>20%: 6  (320s)
+   worst: Aysha 86%, Laith 85%, Amany 70%, Shakir 56%, Abdullah 56%, Hedi 21%
+cmn         (280 feats)  CV bal 0.905 falseRej 0.172 miss 0.018 | TEST bal 0.926 falseRej 0.132 miss 0.017 | voices with falseRej>20%: 6  (636s)
+   worst: Aysha 90%, Laith 83%, Amany 74%, Shakir 58%, Abdullah 51%, Hedi 22%
+cmn_nomean  (259 feats)  CV bal 0.889 falseRej 0.201 miss 0.021 | TEST bal 0.928 falseRej 0.129 miss 0.016 | voices with falseRej>20%: 9  (937s)
+   worst: Laith 88%, Aysha 86%, Amany 72%, Abdullah 71%, Hedi 58%, Shakir 44%

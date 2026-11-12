@@ -1,0 +1,171 @@
+clip_id,path,flag,detail
+edge__ar-AE-FatimaNeural_rate-20__c0__w25_kh,edge__ar-AE-FatimaNeural_rate-20__c0/w25_kh.wav,f0_out_of_range,422 Hz
+edge__ar-AE-HamdanNeural__c0__w12_r,edge__ar-AE-HamdanNeural__c0/w12_r.wav,f0_out_of_range,135 Hz
+edge__ar-AE-HamdanNeural__c0__w19_l-voc,edge__ar-AE-HamdanNeural__c0/w19_l-voc.wav,f0_out_of_range,417 Hz
+edge__ar-AE-HamdanNeural__c1__w06_h,edge__ar-AE-HamdanNeural__c1/w06_h.wav,f0_out_of_range,147 Hz
+edge__ar-AE-HamdanNeural__c1__w12_r,edge__ar-AE-HamdanNeural__c1/w12_r.wav,f0_out_of_range,169 Hz
+edge__ar-AE-HamdanNeural__c2__w12_r,edge__ar-AE-HamdanNeural__c2/w12_r.wav,f0_out_of_range,169 Hz
+edge__ar-AE-HamdanNeural__c2__w25_mix-y-35,edge__ar-AE-HamdanNeural__c2/w25_mix-y-35.wav,f0_out_of_range,167 Hz
+edge__ar-AE-HamdanNeural__c3__w06_h,edge__ar-AE-HamdanNeural__c3/w06_h.wav,f0_out_of_range,161 Hz
+edge__ar-AE-HamdanNeural__c3__w12_r,edge__ar-AE-HamdanNeural__c3/w12_r.wav,f0_out_of_range,154 Hz
+edge__ar-AE-HamdanNeural__c3__w12_r-voc,edge__ar-AE-HamdanNeural__c3/w12_r-voc.wav,f0_out_of_range,172 Hz
+edge__ar-AE-HamdanNeural__c3__w23_n,edge__ar-AE-HamdanNeural__c3/w23_n.wav,f0_out_of_range,157 Hz
+edge__ar-AE-HamdanNeural__c3__w25_mix-y-35,edge__ar-AE-HamdanNeural__c3/w25_mix-y-35.wav,f0_out_of_range,160 Hz
+edge__ar-AE-HamdanNeural__c3__w25_r,edge__ar-AE-HamdanNeural__c3/w25_r.wav,f0_out_of_range,157 Hz
+edge__ar-AE-HamdanNeural_rate-20__c0__w06_hh,edge__ar-AE-HamdanNeural_rate-20__c0/w06_hh.wav,f0_out_of_range,128 Hz
+edge__ar-AE-HamdanNeural_rate-20__c0__w25_mix-y-35,edge__ar-AE-HamdanNeural_rate-20__c0/w25_mix-y-35.wav,f0_out_of_range,174 Hz
+edge__ar-AE-HamdanNeural_rate-20__c2__w25_b,edge__ar-AE-HamdanNeural_rate-20__c2/w25_b.wav,f0_out_of_range,449 Hz
+edge__ar-AE-HamdanNeural_rate-20__c3__w06_hh,edge__ar-AE-HamdanNeural_rate-20__c3/w06_hh.wav,f0_out_of_range,173 Hz
+edge__ar-AE-HamdanNeural_rate-20__c3__w25_mix-y-35,edge__ar-AE-HamdanNeural_rate-20__c3/w25_mix-y-35.wav,f0_out_of_range,152 Hz
+edge__ar-BH-AliNeural__c1__w03_q,edge__ar-BH-AliNeural__c1/w03_q.wav,f0_out_of_range,521 Hz
+edge__ar-BH-AliNeural__c2__w03_q,edge__ar-BH-AliNeural__c2/w03_q.wav,f0_out_of_range,590 Hz
+edge__ar-BH-AliNeural__c2__w07_kh,edge__ar-BH-AliNeural__c2/w07_kh.wav,f0_out_of_range,176 Hz
+edge__ar-BH-AliNeural__c3__w03_q,edge__ar-BH-AliNeural__c3/w03_q.wav,f0_out_of_range,496 Hz
+edge__ar-BH-AliNeural_rate-20__c0__w15_tt,edge__ar-BH-AliNeural_rate-20__c0/w15_tt.wav,f0_out_of_range,156 Hz
+edge__ar-BH-AliNeural_rate-20__c0__w25_hh,edge__ar-BH-AliNeural_rate-20__c0/w25_hh.wav,f0_out_of_range,126 Hz
+edge__ar-BH-LailaNeural__c0__w23_z,edge__ar-BH-LailaNeural__c0/w23_z.wav,f0_out_of_range,408 Hz
+edge__ar-BH-LailaNeural_rate-20__c0__w25_hh,edge__ar-BH-LailaNeural_rate-20__c0/w25_hh.wav,unvoiced,
+edge__ar-BH-LailaNeural_rate-20__c1__w25_hh,edge__ar-BH-LailaNeural_rate-20__c1/w25_hh.wav,f0_out_of_range,80 Hz
+edge__ar-BH-LailaNeural_rate-20__c2__w25_hh,edge__ar-BH-LailaNeural_rate-20__c2/w25_hh.wav,unvoiced,
+edge__ar-BH-LailaNeural_rate-20__c3__w25_hh,edge__ar-BH-LailaNeural_rate-20__c3/w25_hh.wav,unvoiced,
+edge__ar-DZ-IsmaelNeural__c0__w18_r-voc,edge__ar-DZ-IsmaelNeural__c0/w18_r-voc.wav,f0_out_of_range,404 Hz
+edge__ar-DZ-IsmaelNeural__c0__w25_mix-y-35,edge__ar-DZ-IsmaelNeural__c0/w25_mix-y-35.wav,f0_out_of_range,175 Hz
+edge__ar-DZ-IsmaelNeural__c0__w25_r,edge__ar-DZ-IsmaelNeural__c0/w25_r.wav,f0_out_of_range,154 Hz
+edge__ar-DZ-IsmaelNeural__c1__w25_r-voc,edge__ar-DZ-IsmaelNeural__c1/w25_r-voc.wav,f0_out_of_range,179 Hz
+edge__ar-DZ-IsmaelNeural__c2__w25_r-voc,edge__ar-DZ-IsmaelNeural__c2/w25_r-voc.wav,f0_out_of_range,173 Hz
+edge__ar-DZ-IsmaelNeural__c3__w23_gh,edge__ar-DZ-IsmaelNeural__c3/w23_gh.wav,f0_out_of_range,165 Hz
+edge__ar-DZ-IsmaelNeural_rate-20__c1__w13_r,edge__ar-DZ-IsmaelNeural_rate-20__c1/w13_r.wav,f0_out_of_range,176 Hz
+edge__ar-DZ-IsmaelNeural_rate-20__c1__w23_b,edge__ar-DZ-IsmaelNeural_rate-20__c1/w23_b.wav,f0_out_of_range,154 Hz
+edge__ar-DZ-IsmaelNeural_rate-20__c1__w23_h,edge__ar-DZ-IsmaelNeural_rate-20__c1/w23_h.wav,f0_out_of_range,143 Hz
+edge__ar-DZ-IsmaelNeural_rate-20__c3__w12_q,edge__ar-DZ-IsmaelNeural_rate-20__c3/w12_q.wav,f0_out_of_range,402 Hz
+edge__ar-EG-SalmaNeural_rate-20__c0__w25_hh,edge__ar-EG-SalmaNeural_rate-20__c0/w25_hh.wav,f0_out_of_range,595 Hz
+edge__ar-EG-SalmaNeural_rate-20__c1__w25_hh,edge__ar-EG-SalmaNeural_rate-20__c1/w25_hh.wav,unvoiced,
+edge__ar-EG-SalmaNeural_rate-20__c2__w25_hh,edge__ar-EG-SalmaNeural_rate-20__c2/w25_hh.wav,unvoiced,
+edge__ar-EG-SalmaNeural_rate-20__c3__w25_hh,edge__ar-EG-SalmaNeural_rate-20__c3/w25_hh.wav,f0_out_of_range,135 Hz
+edge__ar-EG-ShakirNeural__c0__w12_mix-w-35,edge__ar-EG-ShakirNeural__c0/w12_mix-w-35.wav,f0_out_of_range,123 Hz
+edge__ar-EG-ShakirNeural__c0__w12_r-voc,edge__ar-EG-ShakirNeural__c0/w12_r-voc.wav,f0_out_of_range,118 Hz
+edge__ar-EG-ShakirNeural__c1__w12_mix-w-35,edge__ar-EG-ShakirNeural__c1/w12_mix-w-35.wav,f0_out_of_range,173 Hz
+edge__ar-EG-ShakirNeural__c1__w12_mix-y-65,edge__ar-EG-ShakirNeural__c1/w12_mix-y-65.wav,f0_out_of_range,174 Hz
+edge__ar-EG-ShakirNeural__c1__w20_r,edge__ar-EG-ShakirNeural__c1/w20_r.wav,f0_out_of_range,439 Hz
+edge__ar-EG-ShakirNeural__c2__w12_r-voc,edge__ar-EG-ShakirNeural__c2/w12_r-voc.wav,f0_out_of_range,150 Hz
+edge__ar-EG-ShakirNeural__c3__w12_mix-y-65,edge__ar-EG-ShakirNeural__c3/w12_mix-y-65.wav,f0_out_of_range,172 Hz
+edge__ar-EG-ShakirNeural_rate-20__c0__w18_kh,edge__ar-EG-ShakirNeural_rate-20__c0/w18_kh.wav,f0_out_of_range,145 Hz
+edge__ar-EG-ShakirNeural_rate-20__c1__w03_r,edge__ar-EG-ShakirNeural_rate-20__c1/w03_r.wav,f0_out_of_range,447 Hz
+edge__ar-EG-ShakirNeural_rate-20__c2__w07_b,edge__ar-EG-ShakirNeural_rate-20__c2/w07_b.wav,f0_out_of_range,403 Hz
+edge__ar-EG-ShakirNeural_rate-20__c2__w12_mix-gh-35,edge__ar-EG-ShakirNeural_rate-20__c2/w12_mix-gh-35.wav,f0_out_of_range,431 Hz
+edge__ar-EG-ShakirNeural_rate-20__c2__w20_q,edge__ar-EG-ShakirNeural_rate-20__c2/w20_q.wav,f0_out_of_range,462 Hz
+edge__ar-IQ-BasselNeural__c0__w25_h,edge__ar-IQ-BasselNeural__c0/w25_h.wav,f0_out_of_range,551 Hz
+edge__ar-IQ-BasselNeural__c1__w25_h,edge__ar-IQ-BasselNeural__c1/w25_h.wav,unvoiced,
+edge__ar-IQ-BasselNeural__c1__w25_r,edge__ar-IQ-BasselNeural__c1/w25_r.wav,f0_out_of_range,118 Hz
+edge__ar-IQ-BasselNeural__c2__w25_h,edge__ar-IQ-BasselNeural__c2/w25_h.wav,unvoiced,
+edge__ar-IQ-BasselNeural__c3__w25_h,edge__ar-IQ-BasselNeural__c3/w25_h.wav,unvoiced,
+edge__ar-IQ-BasselNeural__c3__w25_r,edge__ar-IQ-BasselNeural__c3/w25_r.wav,f0_out_of_range,122 Hz
+edge__ar-IQ-BasselNeural_rate-20__c2__w25_hh,edge__ar-IQ-BasselNeural_rate-20__c2/w25_hh.wav,f0_out_of_range,416 Hz
+edge__ar-IQ-RanaNeural_rate-20__c0__w25_hh,edge__ar-IQ-RanaNeural_rate-20__c0/w25_hh.wav,unvoiced,
+edge__ar-IQ-RanaNeural_rate-20__c1__w25_hh,edge__ar-IQ-RanaNeural_rate-20__c1/w25_hh.wav,unvoiced,
+edge__ar-IQ-RanaNeural_rate-20__c3__w25_hh,edge__ar-IQ-RanaNeural_rate-20__c3/w25_hh.wav,unvoiced,
+edge__ar-JO-SanaNeural_rate-20__c0__w25_hh,edge__ar-JO-SanaNeural_rate-20__c0/w25_hh.wav,f0_out_of_range,140 Hz
+edge__ar-JO-SanaNeural_rate-20__c1__w25_hh,edge__ar-JO-SanaNeural_rate-20__c1/w25_hh.wav,unvoiced,
+edge__ar-JO-SanaNeural_rate-20__c2__w25_hh,edge__ar-JO-SanaNeural_rate-20__c2/w25_hh.wav,f0_out_of_range,77 Hz
+edge__ar-JO-SanaNeural_rate-20__c3__w25_hh,edge__ar-JO-SanaNeural_rate-20__c3/w25_hh.wav,unvoiced,
+edge__ar-JO-TaimNeural__c0__w18_gh,edge__ar-JO-TaimNeural__c0/w18_gh.wav,f0_out_of_range,156 Hz
+edge__ar-JO-TaimNeural__c1__w18_gh,edge__ar-JO-TaimNeural__c1/w18_gh.wav,f0_out_of_range,161 Hz
+edge__ar-JO-TaimNeural__c1__w25_tt,edge__ar-JO-TaimNeural__c1/w25_tt.wav,unvoiced,
+edge__ar-JO-TaimNeural__c2__w18_gh,edge__ar-JO-TaimNeural__c2/w18_gh.wav,f0_out_of_range,177 Hz
+edge__ar-JO-TaimNeural__c2__w25_tt,edge__ar-JO-TaimNeural__c2/w25_tt.wav,unvoiced,
+edge__ar-JO-TaimNeural__c3__w25_tt,edge__ar-JO-TaimNeural__c3/w25_tt.wav,unvoiced,
+edge__ar-JO-TaimNeural_rate-20__c0__w25_b,edge__ar-JO-TaimNeural_rate-20__c0/w25_b.wav,f0_out_of_range,455 Hz
+edge__ar-KW-FahedNeural__c2__w06_t,edge__ar-KW-FahedNeural__c2/w06_t.wav,f0_out_of_range,152 Hz
+edge__ar-KW-FahedNeural__c2__w15_gh-voc,edge__ar-KW-FahedNeural__c2/w15_gh-voc.wav,f0_out_of_range,474 Hz
+edge__ar-KW-FahedNeural__c2__w15_m,edge__ar-KW-FahedNeural__c2/w15_m.wav,f0_out_of_range,158 Hz
+edge__ar-KW-FahedNeural_rate-20__c0__w06_z,edge__ar-KW-FahedNeural_rate-20__c0/w06_z.wav,f0_out_of_range,164 Hz
+edge__ar-KW-FahedNeural_rate-20__c0__w19_mix-y-35,edge__ar-KW-FahedNeural_rate-20__c0/w19_mix-y-35.wav,f0_out_of_range,156 Hz
+edge__ar-KW-FahedNeural_rate-20__c0__w19_r-voc,edge__ar-KW-FahedNeural_rate-20__c0/w19_r-voc.wav,f0_out_of_range,156 Hz
+edge__ar-KW-FahedNeural_rate-20__c2__w12_r,edge__ar-KW-FahedNeural_rate-20__c2/w12_r.wav,f0_out_of_range,179 Hz
+edge__ar-KW-FahedNeural_rate-20__c3__w23_dh,edge__ar-KW-FahedNeural_rate-20__c3/w23_dh.wav,f0_out_of_range,422 Hz
+edge__ar-LB-RamiNeural__c0__w07_ain,edge__ar-LB-RamiNeural__c0/w07_ain.wav,f0_out_of_range,402 Hz
+edge__ar-LB-RamiNeural__c1__w02_z,edge__ar-LB-RamiNeural__c1/w02_z.wav,f0_out_of_range,173 Hz
+edge__ar-LB-RamiNeural__c1__w12_l-voc,edge__ar-LB-RamiNeural__c1/w12_l-voc.wav,f0_out_of_range,174 Hz
+edge__ar-LB-RamiNeural__c1__w20_q,edge__ar-LB-RamiNeural__c1/w20_q.wav,f0_out_of_range,162 Hz
+edge__ar-LB-RamiNeural__c1__w25_r,edge__ar-LB-RamiNeural__c1/w25_r.wav,f0_out_of_range,177 Hz
+edge__ar-LB-RamiNeural__c3__w07_ain,edge__ar-LB-RamiNeural__c3/w07_ain.wav,f0_out_of_range,434 Hz
+edge__ar-LB-RamiNeural_rate-20__c0__w07_del,edge__ar-LB-RamiNeural_rate-20__c0/w07_del.wav,f0_out_of_range,177 Hz
+edge__ar-LB-RamiNeural_rate-20__c0__w12_j,edge__ar-LB-RamiNeural_rate-20__c0/w12_j.wav,f0_out_of_range,175 Hz
+edge__ar-LB-RamiNeural_rate-20__c1__w07_del,edge__ar-LB-RamiNeural_rate-20__c1/w07_del.wav,f0_out_of_range,176 Hz
+edge__ar-LB-RamiNeural_rate-20__c3__w12_j,edge__ar-LB-RamiNeural_rate-20__c3/w12_j.wav,f0_out_of_range,404 Hz
+edge__ar-LY-OmarNeural__c1__w03_b,edge__ar-LY-OmarNeural__c1/w03_b.wav,f0_out_of_range,409 Hz
+edge__ar-MA-JamalNeural__c1__w15_q,edge__ar-MA-JamalNeural__c1/w15_q.wav,f0_out_of_range,428 Hz
+edge__ar-MA-JamalNeural__c1__w19_z,edge__ar-MA-JamalNeural__c1/w19_z.wav,f0_out_of_range,403 Hz
+edge__ar-MA-JamalNeural_rate-20__c0__w07_ain,edge__ar-MA-JamalNeural_rate-20__c0/w07_ain.wav,f0_out_of_range,431 Hz
+edge__ar-MA-JamalNeural_rate-20__c0__w15_hh,edge__ar-MA-JamalNeural_rate-20__c0/w15_hh.wav,f0_out_of_range,135 Hz
+edge__ar-MA-JamalNeural_rate-20__c3__w25_r-voc,edge__ar-MA-JamalNeural_rate-20__c3/w25_r-voc.wav,f0_out_of_range,416 Hz
+edge__ar-QA-MoazNeural__c1__w25_tt,edge__ar-QA-MoazNeural__c1/w25_tt.wav,f0_out_of_range,113 Hz
+edge__ar-QA-MoazNeural__c2__w25_tt,edge__ar-QA-MoazNeural__c2/w25_tt.wav,unvoiced,
+edge__ar-QA-MoazNeural__c3__w03_hh,edge__ar-QA-MoazNeural__c3/w03_hh.wav,f0_out_of_range,421 Hz
+edge__ar-QA-MoazNeural__c3__w25_tt,edge__ar-QA-MoazNeural__c3/w25_tt.wav,f0_out_of_range,129 Hz
+edge__ar-QA-MoazNeural__c3__w25_y,edge__ar-QA-MoazNeural__c3/w25_y.wav,unvoiced,
+edge__ar-QA-MoazNeural_rate-20__c0__w03_h,edge__ar-QA-MoazNeural_rate-20__c0/w03_h.wav,f0_out_of_range,425 Hz
+edge__ar-QA-MoazNeural_rate-20__c0__w20_r,edge__ar-QA-MoazNeural_rate-20__c0/w20_r.wav,f0_out_of_range,403 Hz
+edge__ar-QA-MoazNeural_rate-20__c1__w01_d,edge__ar-QA-MoazNeural_rate-20__c1/w01_d.wav,unvoiced,
+edge__ar-QA-MoazNeural_rate-20__c1__w20_r-voc,edge__ar-QA-MoazNeural_rate-20__c1/w20_r-voc.wav,f0_out_of_range,173 Hz
+edge__ar-QA-MoazNeural_rate-20__c2__w25_r,edge__ar-QA-MoazNeural_rate-20__c2/w25_r.wav,f0_out_of_range,501 Hz
+edge__ar-QA-MoazNeural_rate-20__c3__w03_dh,edge__ar-QA-MoazNeural_rate-20__c3/w03_dh.wav,f0_out_of_range,425 Hz
+edge__ar-QA-MoazNeural_rate-20__c3__w03_h,edge__ar-QA-MoazNeural_rate-20__c3/w03_h.wav,f0_out_of_range,403 Hz
+edge__ar-SA-HamedNeural__c0__w05_t,edge__ar-SA-HamedNeural__c0/w05_t.wav,f0_out_of_range,409 Hz
+edge__ar-SA-HamedNeural__c0__w25_r-voc,edge__ar-SA-HamedNeural__c0/w25_r-voc.wav,f0_out_of_range,480 Hz
+edge__ar-SA-HamedNeural__c1__w05_t,edge__ar-SA-HamedNeural__c1/w05_t.wav,f0_out_of_range,124 Hz
+edge__ar-SA-HamedNeural__c1__w13_hh,edge__ar-SA-HamedNeural__c1/w13_hh.wav,f0_out_of_range,176 Hz
+edge__ar-SA-HamedNeural__c1__w15_mix-w-65,edge__ar-SA-HamedNeural__c1/w15_mix-w-65.wav,f0_out_of_range,148 Hz
+edge__ar-SA-HamedNeural__c1__w15_r-voc,edge__ar-SA-HamedNeural__c1/w15_r-voc.wav,f0_out_of_range,152 Hz
+edge__ar-SA-HamedNeural__c1__w25_r,edge__ar-SA-HamedNeural__c1/w25_r.wav,f0_out_of_range,140 Hz
+edge__ar-SA-HamedNeural__c2__w25_r,edge__ar-SA-HamedNeural__c2/w25_r.wav,f0_out_of_range,151 Hz
+edge__ar-SA-HamedNeural__c3__w05_t,edge__ar-SA-HamedNeural__c3/w05_t.wav,f0_out_of_range,130 Hz
+edge__ar-SA-HamedNeural__c3__w15_mix-w-65,edge__ar-SA-HamedNeural__c3/w15_mix-w-65.wav,f0_out_of_range,159 Hz
+edge__ar-SA-HamedNeural_rate-20__c0__w12_t,edge__ar-SA-HamedNeural_rate-20__c0/w12_t.wav,f0_out_of_range,168 Hz
+edge__ar-SA-HamedNeural_rate-20__c3__w12_t,edge__ar-SA-HamedNeural_rate-20__c3/w12_t.wav,f0_out_of_range,166 Hz
+edge__ar-SA-HamedNeural_rate-20__c3__w15_d,edge__ar-SA-HamedNeural_rate-20__c3/w15_d.wav,f0_out_of_range,176 Hz
+edge__ar-SA-HamedNeural_rate-20__c3__w23_w-voc,edge__ar-SA-HamedNeural_rate-20__c3/w23_w-voc.wav,f0_out_of_range,141 Hz
+edge__ar-TN-HediNeural__c0__w18_hh,edge__ar-TN-HediNeural__c0/w18_hh.wav,unvoiced,
+edge__ar-TN-HediNeural__c0__w25_j,edge__ar-TN-HediNeural__c0/w25_j.wav,f0_out_of_range,104 Hz
+edge__ar-TN-HediNeural__c0__w25_w,edge__ar-TN-HediNeural__c0/w25_w.wav,f0_out_of_range,107 Hz
+edge__ar-TN-HediNeural__c1__w03_t,edge__ar-TN-HediNeural__c1/w03_t.wav,unvoiced,
+edge__ar-TN-HediNeural__c1__w18_hh,edge__ar-TN-HediNeural__c1/w18_hh.wav,unvoiced,
+edge__ar-TN-HediNeural__c1__w25_j,edge__ar-TN-HediNeural__c1/w25_j.wav,f0_out_of_range,102 Hz
+edge__ar-TN-HediNeural__c1__w25_w,edge__ar-TN-HediNeural__c1/w25_w.wav,f0_out_of_range,90 Hz
+edge__ar-TN-HediNeural__c2__w03_t,edge__ar-TN-HediNeural__c2/w03_t.wav,f0_out_of_range,578 Hz
+edge__ar-TN-HediNeural__c2__w18_hh,edge__ar-TN-HediNeural__c2/w18_hh.wav,f0_out_of_range,109 Hz
+edge__ar-TN-HediNeural__c2__w25_j,edge__ar-TN-HediNeural__c2/w25_j.wav,f0_out_of_range,113 Hz
+edge__ar-TN-HediNeural__c2__w25_w,edge__ar-TN-HediNeural__c2/w25_w.wav,f0_out_of_range,440 Hz
+edge__ar-TN-HediNeural__c3__w03_k,edge__ar-TN-HediNeural__c3/w03_k.wav,f0_out_of_range,105 Hz
+edge__ar-TN-HediNeural__c3__w03_t,edge__ar-TN-HediNeural__c3/w03_t.wav,unvoiced,
+edge__ar-TN-HediNeural__c3__w18_hh,edge__ar-TN-HediNeural__c3/w18_hh.wav,unvoiced,
+edge__ar-TN-HediNeural__c3__w25_j,edge__ar-TN-HediNeural__c3/w25_j.wav,unvoiced,
+edge__ar-TN-HediNeural__c3__w25_w,edge__ar-TN-HediNeural__c3/w25_w.wav,f0_out_of_range,417 Hz
+edge__ar-TN-ReemNeural__c2__w03_t,edge__ar-TN-ReemNeural__c2/w03_t.wav,f0_out_of_range,161 Hz
+edge__ar-TN-ReemNeural__c3__w03_t,edge__ar-TN-ReemNeural__c3/w03_t.wav,f0_out_of_range,133 Hz
+edge__ar-YE-SalehNeural_rate-20__c3__w03_h,edge__ar-YE-SalehNeural_rate-20__c3/w03_h.wav,f0_out_of_range,477 Hz
+edge__de-DE-FlorianMultilingualNeural__c0__w25_dh,edge__de-DE-FlorianMultilingualNeural__c0/w25_dh.wav,unvoiced,
+edge__de-DE-FlorianMultilingualNeural__c1__w25_dh,edge__de-DE-FlorianMultilingualNeural__c1/w25_dh.wav,unvoiced,
+edge__de-DE-FlorianMultilingualNeural__c2__w25_dh,edge__de-DE-FlorianMultilingualNeural__c2/w25_dh.wav,f0_out_of_range,487 Hz
+edge__de-DE-FlorianMultilingualNeural__c3__w25_dh,edge__de-DE-FlorianMultilingualNeural__c3/w25_dh.wav,unvoiced,
+edge__en-AU-WilliamMultilingualNeural__c3__w25_del,edge__en-AU-WilliamMultilingualNeural__c3/w25_del.wav,f0_out_of_range,88 Hz
+edge__en-US-AndrewMultilingualNeural__c0__w25_ain,edge__en-US-AndrewMultilingualNeural__c0/w25_ain.wav,f0_out_of_range,433 Hz
+edge__en-US-AndrewMultilingualNeural__c0__w25_y,edge__en-US-AndrewMultilingualNeural__c0/w25_y.wav,f0_out_of_range,153 Hz
+edge__en-US-BrianMultilingualNeural__c0__w05_del,edge__en-US-BrianMultilingualNeural__c0/w05_del.wav,f0_out_of_range,429 Hz
+edge__en-US-BrianMultilingualNeural__c0__w07_h,edge__en-US-BrianMultilingualNeural__c0/w07_h.wav,f0_out_of_range,460 Hz
+edge__en-US-BrianMultilingualNeural__c0__w25_r,edge__en-US-BrianMultilingualNeural__c0/w25_r.wav,f0_out_of_range,518 Hz
+edge__en-US-BrianMultilingualNeural_rate-20__c2__w05_del,edge__en-US-BrianMultilingualNeural_rate-20__c2/w05_del.wav,f0_out_of_range,174 Hz
+edge__en-US-EmmaMultilingualNeural__c3__w07_hh,edge__en-US-EmmaMultilingualNeural__c3/w07_hh.wav,f0_out_of_range,408 Hz
+edge__en-US-EmmaMultilingualNeural_rate-20__c1__w03_del,edge__en-US-EmmaMultilingualNeural_rate-20__c1/w03_del.wav,f0_out_of_range,402 Hz
+edge__en-US-EmmaMultilingualNeural_rate-20__c3__w25_gh,edge__en-US-EmmaMultilingualNeural_rate-20__c3/w25_gh.wav,f0_out_of_range,425 Hz
+edge__fr-FR-RemyMultilingualNeural__c2__w20_r,edge__fr-FR-RemyMultilingualNeural__c2/w20_r.wav,f0_out_of_range,439 Hz
+edge__fr-FR-RemyMultilingualNeural__c3__w20_r,edge__fr-FR-RemyMultilingualNeural__c3/w20_r.wav,f0_out_of_range,494 Hz
+edge__it-IT-GiuseppeMultilingualNeural__c0__w12_r,edge__it-IT-GiuseppeMultilingualNeural__c0/w12_r.wav,f0_out_of_range,443 Hz
+edge__it-IT-GiuseppeMultilingualNeural__c0__w25_tt,edge__it-IT-GiuseppeMultilingualNeural__c0/w25_tt.wav,f0_out_of_range,104 Hz
+edge__it-IT-GiuseppeMultilingualNeural__c1__w12_r,edge__it-IT-GiuseppeMultilingualNeural__c1/w12_r.wav,f0_out_of_range,442 Hz
+edge__it-IT-GiuseppeMultilingualNeural__c1__w25_tt,edge__it-IT-GiuseppeMultilingualNeural__c1/w25_tt.wav,unvoiced,
+edge__it-IT-GiuseppeMultilingualNeural__c1__w25_w,edge__it-IT-GiuseppeMultilingualNeural__c1/w25_w.wav,f0_out_of_range,118 Hz
+edge__it-IT-GiuseppeMultilingualNeural__c2__w12_r,edge__it-IT-GiuseppeMultilingualNeural__c2/w12_r.wav,f0_out_of_range,141 Hz
+edge__it-IT-GiuseppeMultilingualNeural__c3__w12_r,edge__it-IT-GiuseppeMultilingualNeural__c3/w12_r.wav,f0_out_of_range,123 Hz
+edge__it-IT-GiuseppeMultilingualNeural__c3__w25_w,edge__it-IT-GiuseppeMultilingualNeural__c3/w25_w.wav,f0_out_of_range,160 Hz
+edge__it-IT-GiuseppeMultilingualNeural_rate-20__c2__w25_gh,edge__it-IT-GiuseppeMultilingualNeural_rate-20__c2/w25_gh.wav,f0_out_of_range,467 Hz

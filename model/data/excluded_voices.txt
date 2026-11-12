@@ -1,0 +1,6 @@
+# Voice groups left out of training (all their clips: both speeds, blends and child versions).
+# One voice_group per line; lines starting with # are ignored.
+# Reason: on the diagnosis page the ADULT TTS already says "ارمل" for رمل and "عجل" for رجل (checked by ear, 2026-11-12).
+ar-AE-FatimaNeural
+ar-LB-LaylaNeural
+ar-SA-ZariyahNeural
