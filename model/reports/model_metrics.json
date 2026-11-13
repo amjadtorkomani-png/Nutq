@@ -35,20 +35,5 @@
   "correct": 0.0,
   "close": 0.0014,
   "incorrect": 0.9986
- },
- "real": {
-  "n": 54,
-  "said_correct": {
-   "correct": 0.2889,
-   "close": 0.0889,
-   "incorrect": 0.6222
-  },
-  "n_correct": 45,
-  "said_incorrect": {
-   "correct": 0.2222,
-   "close": 0.0,
-   "incorrect": 0.7778
-  },
-  "n_incorrect": 9
  }
 }

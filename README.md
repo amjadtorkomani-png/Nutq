@@ -69,7 +69,7 @@ This is an early-stage prototype built for MEDATHON 2026.
 | Specialist dashboard | Not started |
 | Data from real children | Not collected yet (needs ethics approval and parent consent) |
 
-**About the current listener:** it hears one word and the word the child was asked to say, and answers صح / قريب / غلط. It uses a pretrained multilingual speech model (mHuBERT-147) and three small classifiers: is the R right, which word was said, which sound replaced the R. It is trained on **synthetic speech only** (text-to-speech voices converted to child-like voices). On 6 synthetic voices it never saw, it catches 99% of errors and accepts 89% of correct words. On real microphone recordings it is much weaker (most correct words are rejected), so it is not ready for children. The next milestone is training and testing on real recordings labelled by speech specialists. Full details: [model/README.md](model/README.md).
+**About the current listener:** it hears one word and the word the child was asked to say, and answers صح / قريب / غلط. It uses a pretrained multilingual speech model (mHuBERT-147) and three small classifiers: is the R right, which word was said, which sound replaced the R. It is trained on **synthetic speech only** (text-to-speech voices converted to child-like voices). On 6 synthetic voices it never saw, it catches 99% of errors and accepts 89% of correct words. Results on synthetic data say nothing yet about real children. The next milestone is training and testing on real recordings labelled by speech specialists. Full details: [model/README.md](model/README.md).
 
 ## Repository layout
 

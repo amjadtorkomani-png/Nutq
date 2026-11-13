@@ -12,8 +12,8 @@ Three logistic regressions on the same embedding (StandardScaler first):
   word     25 words (error versions count as their word)       up to 28 clips per utterance, C=0.02
   letter   the sound in the R place (21 classes, "del" = none)  up to 28 clips per utterance, C=0.02
 
-Everything is measured on the 6 test voices that no model saw, plus the recordings in data/real/
-(when there are any): python scripts/train_model.py
+Everything is measured on the 6 test voices that no model saw.
+Usage: python scripts/train_model.py
 """
 
 import csv
@@ -126,21 +126,6 @@ def main():
     sw = [listener.decide(bundle, p_r[i], Pw[i], Pl[i], other[i])["verdict"] for i in np.where(yt == 0)[0]]
     M["system_other_word"] = share(sw)
     log("test voices measured")
-
-    # 4. real recordings (data/real/log.csv), if any
-    real = ROOT / "data" / "real" / "log.csv"
-    if real.exists():
-        rows = [r for r in csv.DictReader(open(real, encoding="utf-8")) if r["mode"] != "test" and r["expected"]]
-        if rows:
-            del E, Xte
-            L = listener.Listener()
-            out = defaultdict(list)
-            for r in rows:
-                res = L.judge(str(ROOT / "data" / "real" / r["file"]), r["word_id"], adult=r.get("adult", "1") == "1")
-                out[r["expected"]].append(res["verdict"])
-            M["real"] = {"n": len(rows), "said_correct": share(out["correct"]), "n_correct": len(out["correct"]),
-                         "said_incorrect": share(out["incorrect"]), "n_incorrect": len(out["incorrect"])}
-            log(f"{len(rows)} real recordings measured")
 
     (ROOT / "reports" / "model_metrics.json").write_text(json.dumps(M, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(M, ensure_ascii=False, indent=1))

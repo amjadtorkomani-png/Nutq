@@ -8,7 +8,7 @@ The Nutq "listener" hears one word said by a child, together with the word the c
 | **قريب** (close) | Not sure: the recording goes to the speech specialist |
 | **غلط** (wrong) | A different word, or another sound in place of the R, or a wrong R |
 
-> **Important:** the model is trained on **synthetic speech only** (text-to-speech voices turned into child-like voices). On synthetic test voices it is accurate. On real microphone recordings it is much weaker ([section 5.3](#53-real-recordings)). It is not ready for children. The next step is training and testing on real recordings labelled by speech specialists.
+> **Important:** the model is trained on **synthetic speech only** (text-to-speech voices turned into child-like voices). Its results are on synthetic test voices and say nothing yet about real children. The next step is training and testing on real recordings labelled by speech specialists.
 
 ---
 
@@ -290,19 +290,6 @@ The letter model mostly confuses sounds that are close:
 | ط | ت |
 | ق | no R |
 
-### 5.3 Real recordings
-
-These are 54 recordings made with the test app by one adult team member on a laptop microphone:
-- 45 asked to be said correctly,
-- 9 asked with a given error.
-
-| Asked to say | صح | قريب | غلط |
-|---|---|---|---|
-| Correctly (45) | 28.9% | 8.9% | **62.2%** |
-| With an error (9) | 22.2% | 0.0% | **77.8%** |
-
-On real recordings, most correct words are marked wrong. The models learned from synthetic voices only, and a real voice through a real microphone is different from them. **Closing this gap is the main work before any use with children.**
-
 ---
 
 ## 6. Rebuild everything
@@ -368,8 +355,8 @@ model/
 
 | Limit | Next step |
 |---|---|
-| Trained on synthetic voices only; weak on real recordings ([5.3](#53-real-recordings)) | Train with real recordings: first the team's own (collected with the test app), then children's recordings labelled by two specialists (needs ethics approval and parent consent) |
-| The letter rule rejects some correct words | Tune `letter_min` on real recordings |
+| Trained and tested on synthetic voices only | Train and test with children's recordings labelled by two specialists (needs ethics approval and parent consent) |
+| The letter rule rejects some correct words | Tune `letter_min` on real speech |
 | One target sound | S (س) with the same pipeline |
 | Runs on a laptop CPU (~0.2 s per word) | Smaller model for checking on the phone |
 
