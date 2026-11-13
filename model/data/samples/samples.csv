@@ -1,0 +1,13 @@
+file,word,text_sent_to_tts,label,said_instead_of_r,voice,child_voice
+w01_رمل_r.wav,رمل,رَمْل,correct,ر,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w01_رمل_y.wav,رمل,يَمْل,incorrect,ي,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w01_رمل_mix-y-35.wav,رمل,يَمْل,distorted,ر~ي,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w01_رمل_mix-y-65.wav,رمل,يَمْل,distorted,ر~ي,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w12_كرة_r.wav,كرة,كُرَه,correct,ر,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w12_كرة_l.wav,كرة,كُلَه,incorrect,ل,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w12_كرة_mix-l-35.wav,كرة,كُلَه,distorted,ر~ل,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w12_كرة_mix-l-65.wav,كرة,كُلَه,distorted,ر~ل,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w19_قمر_r.wav,قمر,قَمَر,correct,ر,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w19_قمر_gh.wav,قمر,قَمَغ,incorrect,غ,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w19_قمر_y.wav,قمر,قَمَي,incorrect,ي,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0
+w19_قمر_mix-gh-65.wav,قمر,قَمَغ,distorted,ر~غ,ar-SA-HamedNeural,edge__ar-SA-HamedNeural__c0

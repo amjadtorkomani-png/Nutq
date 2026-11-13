@@ -1,0 +1,23 @@
+# Generated audio and features (large; rebuilt by the scripts in model/scripts)
+model/data/raw/
+model/data/blend/
+model/data/child/
+model/data/features/
+model/data/diagnose/
+model/data/voice_test/
+model/data/splits.csv
+model/logs/
+model/.hf_cache/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS / editor
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+model/models/

@@ -1,0 +1,70 @@
+{
+ "thresholds": {
+  "lo": 0.1,
+  "hi": 0.9,
+  "word_min": 0.25,
+  "letter_min": 0.5
+ },
+ "n_train": 32834,
+ "n_test": 8503,
+ "r_model": {
+  "auc": 0.9903901110899318,
+  "balanced_acc": 0.968172855086467,
+  "false_rejection": 0.0551436515291937,
+  "missed_errors": 0.00851063829787234
+ },
+ "word_acc": 0.9767141009055628,
+ "letter_acc": 0.8596965776784664,
+ "letter_acc_errors_only": 0.8398739164696611,
+ "system_said_correct": {
+  "correct": 0.8883,
+  "close": 0.0426,
+  "incorrect": 0.069
+ },
+ "system_said_incorrect": {
+  "correct": 0.0008,
+  "close": 0.0095,
+  "incorrect": 0.9898
+ },
+ "system_reasons_on_correct_words": {
+  "letter": 97,
+  "word": 30,
+  "r": 22
+ },
+ "system_other_word": {
+  "correct": 0.0,
+  "close": 0.0014,
+  "incorrect": 0.9986
+ },
+ "in_between_test_voices": {
+  "note": "R blended towards another letter (confidence set, never trained on), test voices only",
+  "0%": {
+   "n": 962,
+   "mean_p_error": 0.07,
+   "correct": 0.859,
+   "close": 0.046,
+   "incorrect": 0.096
+  },
+  "35%": {
+   "n": 1563,
+   "mean_p_error": 0.2,
+   "correct": 0.593,
+   "close": 0.141,
+   "incorrect": 0.266
+  },
+  "65%": {
+   "n": 1562,
+   "mean_p_error": 0.69,
+   "correct": 0.149,
+   "close": 0.125,
+   "incorrect": 0.725
+  },
+  "100%": {
+   "n": 1563,
+   "mean_p_error": 0.97,
+   "correct": 0.001,
+   "close": 0.014,
+   "incorrect": 0.985
+  }
+ }
+}

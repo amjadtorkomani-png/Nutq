@@ -1,0 +1,17 @@
+# Use the model (predict.py)
+numpy>=2.0
+scipy>=1.13
+scikit-learn==1.9.1
+joblib>=1.4
+soundfile>=0.12
+librosa>=0.10
+praat-parselmouth>=0.4.3
+torch>=2.2
+transformers>=4.40
+
+# Rebuild the data (generate_tts.py, make_blends.py)
+edge-tts>=7.0
+pyworld>=0.3.4
+# optional engines for generate_tts.py
+# azure-cognitiveservices-speech
+# requests
