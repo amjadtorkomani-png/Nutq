@@ -1,0 +1,54 @@
+{
+ "thresholds": {
+  "lo": 0.1,
+  "hi": 0.9,
+  "word_min": 0.25,
+  "letter_min": 0.5
+ },
+ "n_train": 32834,
+ "n_test": 8503,
+ "r_model": {
+  "auc": 0.9903901110899318,
+  "balanced_acc": 0.968172855086467,
+  "false_rejection": 0.0551436515291937,
+  "missed_errors": 0.00851063829787234
+ },
+ "word_acc": 0.9767141009055628,
+ "letter_acc": 0.8596965776784664,
+ "letter_acc_errors_only": 0.8398739164696611,
+ "system_said_correct": {
+  "correct": 0.8883,
+  "close": 0.0426,
+  "incorrect": 0.069
+ },
+ "system_said_incorrect": {
+  "correct": 0.0008,
+  "close": 0.0095,
+  "incorrect": 0.9898
+ },
+ "system_reasons_on_correct_words": {
+  "letter": 97,
+  "word": 30,
+  "r": 22
+ },
+ "system_other_word": {
+  "correct": 0.0,
+  "close": 0.0014,
+  "incorrect": 0.9986
+ },
+ "real": {
+  "n": 54,
+  "said_correct": {
+   "correct": 0.2889,
+   "close": 0.0889,
+   "incorrect": 0.6222
+  },
+  "n_correct": 45,
+  "said_incorrect": {
+   "correct": 0.2222,
+   "close": 0.0,
+   "incorrect": 0.7778
+  },
+  "n_incorrect": 9
+ }
+}

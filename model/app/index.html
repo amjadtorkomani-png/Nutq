@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>سامع النطق</title>
+<style>
+:root{
+  --bg:#f6f5f2; --card:#ffffff; --ink:#1d1d1f; --muted:#6b6b70; --line:#e4e2dc;
+  --accent:#2f5bd3; --accent-ink:#fff;
+  --ok:#1f8a4c; --ok-bg:#e5f4ea; --mid:#b26a00; --mid-bg:#fbf0dc; --bad:#c0362c; --bad-bg:#fbe6e3;
+  --rec:#d23b3b;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141416; --card:#1e1e22; --ink:#f1f1f3; --muted:#a0a0a8; --line:#2f2f35;
+    --accent:#6f8ff0; --accent-ink:#0d0d10;
+    --ok:#5cc98a; --ok-bg:#16301f; --mid:#f0b45a; --mid-bg:#33270f; --bad:#f07a70; --bad-bg:#3a1a17;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",sans-serif;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-size:26px;margin:0}
+.sub{color:var(--muted);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:16px}
+.modes{display:flex;gap:8px;flex-wrap:wrap}
+.modes button{flex:1;min-width:110px;border:1px solid var(--line);background:transparent;color:var(--ink);padding:10px;border-radius:10px;font:inherit;cursor:pointer}
+.modes button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opts{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:12px;color:var(--muted);font-size:14px}
+.opts label{display:flex;gap:6px;align-items:center;cursor:pointer}
+select{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.ask{text-align:center}
+.ask .say{color:var(--muted);font-size:16px}
+.ask .target{font-size:64px;font-weight:700;margin:6px 0 2px;line-height:1.3}
+.ask .hint{font-size:16px;min-height:26px}
+.hint b{color:var(--bad)} .hint .g{color:var(--ok)}
+.ask .ref{color:var(--muted);font-size:14px}
+.recrow{display:flex;justify-content:center;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap}
+.rec{width:96px;height:96px;border-radius:50%;border:none;background:var(--rec);color:#fff;font:inherit;font-size:15px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.rec.live{animation:pulse 1s infinite}
+.rec:disabled{opacity:.5;cursor:wait}
+@keyframes pulse{50%{transform:scale(1.07)}}
+.ghost{border:1px solid var(--line);background:transparent;color:var(--ink);padding:10px 16px;border-radius:10px;font:inherit;cursor:pointer}
+.status{text-align:center;color:var(--muted);font-size:14px;min-height:22px;margin-top:10px}
+.meter{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:10px auto 0;max-width:260px}
+.meter i{display:block;height:100%;width:0;background:var(--rec);transition:width .05s}
+.result{display:none}
+.verdict{border-radius:12px;padding:14px 16px;font-size:22px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.v-correct{background:var(--ok-bg);color:var(--ok)} .v-close{background:var(--mid-bg);color:var(--mid)} .v-incorrect{background:var(--bad-bg);color:var(--bad)}
+.verdict small{font-size:14px;font-weight:400}
+.agree{white-space:pre-line}
+.bar{position:relative;height:14px;border-radius:7px;margin:18px 0 4px;background:linear-gradient(to left,var(--ok) 0 10%,var(--mid) 10% 90%,var(--bad) 90% 100%);opacity:.85}
+.bar i{position:absolute;top:-5px;width:4px;height:24px;background:var(--ink);border-radius:2px;transform:translateX(-50%)}
+.scale{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.agree{margin-top:14px;font-size:16px}
+.warn{color:var(--mid);font-size:14px;margin-top:8px}
+audio{width:100%;margin-top:12px}
+.score{display:flex;gap:10px;flex-wrap:wrap}
+.score div{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.score b{display:block;font-size:22px}
+.score span{color:var(--muted);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:right}
+th{color:var(--muted);font-weight:400}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-left:6px}
+.note{color:var(--muted);font-size:13px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>سامع النطق</h1>
+    <span class="sub" id="health">يحمّل الموديل…</span>
+  </header>
+
+  <div class="card">
+    <div class="modes" id="modes">
+      <button data-m="correct">قلها صح</button>
+      <button data-m="incorrect">قلها غلط</button>
+      <button data-m="mix" class="on">عشوائي</button>
+      <button data-m="free">حر</button>
+    </div>
+    <div class="opts">
+      <label><input type="checkbox" id="adult" checked> صوتي صوت كبير (حوّله لصوت طفل قبل الحكم)</label>
+      <label id="freeWrap" style="display:none">الكلمة: <select id="freeWord"></select></label>
+    </div>
+  </div>
+
+  <div class="card ask">
+    <div class="say" id="say">قل:</div>
+    <div class="target" id="target">…</div>
+    <div class="hint" id="hint"></div>
+    <div class="ref" id="ref"></div>
+    <div class="recrow">
+      <button class="rec" id="rec" disabled>سجّل</button>
+      <button class="ghost" id="next">كلمة ثانية ↻</button>
+      <label class="ghost" style="cursor:pointer">ارفع ملف صوت<input type="file" id="upload" accept="audio/*,.wav,.mp3,.ogg,.flac" hidden></label>
+    </div>
+    <div class="meter"><i id="level"></i></div>
+    <div class="status" id="status">اضغط «سجّل» أو زر المسافة، قل الكلمة، وبيوقف لحاله بعد ثانيتين ونص.</div>
+  </div>
+
+  <div class="card result" id="result">
+    <div class="verdict" id="verdict"></div>
+    <div class="bar"><i id="pin"></i></div>
+    <div class="scale"><span>صح ← 0</span><span>احتمال الغلط</span><span>1 → غلط</span></div>
+    <div class="agree" id="agree"></div>
+    <div class="warn" id="warn"></div>
+    <audio id="play" controls></audio>
+  </div>
+
+  <div class="card">
+    <div class="score">
+      <div><b id="sAgree">0 / 0</b><span>الموديل وافق المطلوب</span></div>
+      <div><b id="sRef">0</b><span>قال «قريب» (للأخصائي)</span></div>
+      <div><b id="sAll">0</b><span>كل التسجيلات</span></div>
+    </div>
+    <table id="hist"><thead><tr><th>المطلوب</th><th>قلت</th><th>حكم الموديل</th><th>P(غلط)</th></tr></thead><tbody></tbody></table>
+    <div class="note">كل تسجيل ينحفظ على جهازك في <code>data/real/</code> مع جدول <code>log.csv</code>، عشان نختبر الموديل بأصوات حقيقية بعدين.</div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const VERDICT = {correct:["صح ✓","الكلمة والراء سليمة"], close:["قريب","مو متأكد، يتحوّل للأخصائي"], incorrect:["غلط ✗","الكلمة أو الراء مو سليمة"]};
+const COLOR = {correct:"var(--ok)", close:"var(--mid)", incorrect:"var(--bad)"};
+const WARN = {quiet:"الصوت واطي جدًا، قرّب من المايك", short:"المقطع قصير جدًا، يمكن ما انسمعت الكلمة", long:"المقطع طويل، قل كلمة وحدة بس"};
+let WORDS = [], mode = "mix", cur = null, busy = false;
+let score = {agree:0, decided:0, ref:0, all:0};
+
+const pick = a => a[Math.floor(Math.random() * a.length)];
+
+function newTask(){
+  $("result").style.display = "none";
+  if (mode === "free"){
+    const w = WORDS.find(x => x.word_id === $("freeWord").value) || WORDS[0];
+    cur = {mode, word:w, utt:null, expected:""};
+    $("say").textContent = "قل الكلمة كيف ما تبغى:";
+    $("target").textContent = w.correct_text;
+    $("hint").textContent = "صح أو غلط، والموديل يحكم.";
+    $("ref").textContent = "";
+    return;
+  }
+  const w = pick(WORDS);
+  let want = mode === "mix" ? (Math.random() < 0.5 ? "correct" : "incorrect") : mode;
+  const pool = w.variants.filter(v => v.label === want);
+  const v = pick(pool);
+  cur = {mode, word:w, utt:v, expected:want};
+  $("target").textContent = v.text;
+  if (want === "correct"){
+    $("say").textContent = "قلها صح:";
+    $("hint").innerHTML = '<span class="g">انطق الراء صح</span>';
+    $("ref").textContent = "";
+  } else {
+    $("say").textContent = "قلها غلط، زي ما هي مكتوبة:";
+    $("hint").innerHTML = v.produced_char === "-" ? "<b>شيل الراء</b> من الكلمة"
+      : `بدل الراء قل <b>${v.produced_char}</b>`;
+    $("ref").textContent = "الكلمة الصحيحة: " + w.correct_text;
+  }
+}
+
+// ---------- recording (raw PCM -> WAV in the browser) ----------
+let ctx, stream, node, src, chunks = [], timer, recording = false;
+async function startRec(){
+  if (busy || recording) return;
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({audio:{channelCount:1, echoCancellation:false, autoGainControl:false, noiseSuppression:true}});
+  }catch(e){
+    $("status").innerHTML = e.name === "NotAllowedError"
+      ? "المايك ممنوع في هذا المتصفح. افتح <b>http://127.0.0.1:8765</b> في Chrome أو Edge واضغط «سماح» لما يسألك عن المايك، أو ارفع ملف صوت."
+      : e.name === "NotFoundError" ? "ما لقيت مايك موصول بالجهاز." : "ما قدرت أوصل للمايك: " + e.name + " " + e.message;
+    return;
+  }
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  src = ctx.createMediaStreamSource(stream);
+  node = ctx.createScriptProcessor(4096, 1, 1);
+  chunks = [];
+  node.onaudioprocess = e => {
+    const d = e.inputBuffer.getChannelData(0);
+    chunks.push(new Float32Array(d));
+    let m = 0; for (let i = 0; i < d.length; i += 16) m = Math.max(m, Math.abs(d[i]));
+    $("level").style.width = Math.min(100, m * 140) + "%";
+  };
+  src.connect(node); node.connect(ctx.destination);
+  recording = true;
+  $("rec").classList.add("live"); $("rec").textContent = "وقّف";
+  $("status").textContent = "يسجّل… قل الكلمة";
+  timer = setTimeout(stopRec, 2500);
+}
+async function stopRec(){
+  if (!recording) return;
+  recording = false; clearTimeout(timer);
+  node.disconnect(); src.disconnect(); stream.getTracks().forEach(t => t.stop());
+  const sr = ctx.sampleRate; await ctx.close();
+  $("rec").classList.remove("live"); $("rec").textContent = "سجّل"; $("level").style.width = "0";
+  const n = chunks.reduce((a, c) => a + c.length, 0), pcm = new Float32Array(n);
+  let o = 0; for (const c of chunks){ pcm.set(c, o); o += c.length; }
+  send(wav(pcm, sr));
+}
+function wav(pcm, sr){
+  const b = new ArrayBuffer(44 + pcm.length * 2), v = new DataView(b);
+  const s = (p, t) => { for (let i = 0; i < t.length; i++) v.setUint8(p + i, t.charCodeAt(i)); };
+  s(0,"RIFF"); v.setUint32(4, 36 + pcm.length * 2, true); s(8,"WAVE"); s(12,"fmt ");
+  v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,1,true); v.setUint32(24,sr,true);
+  v.setUint32(28,sr*2,true); v.setUint16(32,2,true); v.setUint16(34,16,true); s(36,"data"); v.setUint32(40,pcm.length*2,true);
+  for (let i = 0; i < pcm.length; i++){ const x = Math.max(-1, Math.min(1, pcm[i])); v.setInt16(44 + i*2, x < 0 ? x*0x8000 : x*0x7fff, true); }
+  return new Blob([b], {type:"audio/wav"});
+}
+
+// ---------- judge ----------
+async function send(blob){
+  busy = true; $("rec").disabled = true; $("status").textContent = "الموديل يسمع…";
+  const q = new URLSearchParams({mode:cur.mode, word_id:cur.word.word_id, utt_id:cur.utt ? cur.utt.utt_id : "free",
+                                 expected:cur.expected, adult:$("adult").checked ? "1" : "0"});
+  try{
+    const r = await fetch("/api/judge?" + q, {method:"POST", body:blob});
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || r.status);
+    show(j, blob);
+    $("status").textContent = `خلص (${j.ms} ms). اضغط «كلمة ثانية» أو سجّل مرة ثانية.`;
+  }catch(e){ $("status").textContent = "صار خطأ: " + e.message; }
+  busy = false; $("rec").disabled = false;
+}
+
+function show(j, blob){
+  const [t, s] = VERDICT[j.verdict];
+  $("verdict").className = "verdict v-" + j.verdict;
+  $("verdict").innerHTML = `<span>${t}</span><small>${s}</small>`;
+  $("pin").style.left = `${(100 - j.p_error * 100).toFixed(1)}%`;
+  let agree = "";
+  score.all++;
+  if (cur.expected){
+    if (j.verdict === "close"){ score.ref++; agree = "الموديل ما حسم، يحوّله للأخصائي."; }
+    else {
+      score.decided++;
+      const ok = j.verdict === cur.expected;
+      if (ok) score.agree++;
+      agree = ok ? "✓ الموديل حكم صح: هذا اللي طلبته منك." : `✗ الموديل غلط: طلبت منك تقولها ${cur.expected === "correct" ? "صح" : "غلط"}.`;
+    }
+  }
+  $("agree").textContent = agree;
+  $("warn").textContent = j.warnings.map(w => WARN[w] || w).join(" · ");
+  $("play").src = URL.createObjectURL(blob);
+  $("result").style.display = "block";
+  $("sAgree").textContent = `${score.agree} / ${score.decided}`;
+  $("sRef").textContent = score.ref; $("sAll").textContent = score.all;
+  const tr = document.createElement("tr");
+  const want = cur.expected === "correct" ? "صح" : cur.expected === "incorrect" ? "غلط" : "حر";
+  tr.innerHTML = `<td>${want}</td><td>${cur.utt ? cur.utt.text : cur.word.correct_text}</td>` +
+    `<td><span class="dot" style="background:${COLOR[j.verdict]}"></span>${t}</td><td>${j.p_error.toFixed(2)}</td>`;
+  $("hist").tBodies[0].prepend(tr);
+}
+
+// ---------- wiring ----------
+$("modes").onclick = e => {
+  const b = e.target.closest("button"); if (!b) return;
+  mode = b.dataset.m;
+  document.querySelectorAll("#modes button").forEach(x => x.classList.toggle("on", x === b));
+  $("freeWrap").style.display = mode === "free" ? "flex" : "none";
+  newTask();
+};
+$("freeWord").onchange = newTask;
+$("upload").onchange = e => { const f = e.target.files[0]; e.target.value = ""; if (f && !busy) send(f); };
+$("next").onclick = newTask;
+$("rec").onclick = () => recording ? stopRec() : startRec();
+document.addEventListener("keydown", e => {
+  if (e.code === "Space" && e.target.tagName !== "SELECT"){ e.preventDefault(); recording ? stopRec() : startRec(); }
+});
+
+(async () => {
+  try{
+    const [u, h] = await Promise.all([fetch("/api/utterances").then(r => r.json()), fetch("/api/health").then(r => r.json())]);
+    WORDS = u;    $("freeWord").innerHTML = WORDS.map(w => `<option value="${w.word_id}">${w.correct_text}</option>`).join("");
+    $("health").textContent = `الموديل: ${h.model} · ${WORDS.length} كلمة`;
+    $("rec").disabled = false;
+    newTask();
+  }catch(e){ $("health").textContent = "السيرفر مو شغال"; }
+})();
+</script>
+</body>
+</html>

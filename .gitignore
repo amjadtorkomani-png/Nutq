@@ -19,3 +19,7 @@ desktop.ini
 .DS_Store
 .vscode/
 .idea/
+
+# Recordings made with the test app (people's voices: never commit)
+model/data/real/
+model/models/

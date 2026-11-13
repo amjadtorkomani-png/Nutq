@@ -1,4 +1,4 @@
-# Use the model (predict.py)
+# Use the model (predict.py, app.py)
 numpy>=2.0
 scipy>=1.13
 scikit-learn==1.9.1
@@ -6,6 +6,8 @@ joblib>=1.4
 soundfile>=0.12
 librosa>=0.10
 praat-parselmouth>=0.4.3
+torch>=2.2
+transformers>=4.40
 
 # Rebuild the data (generate_tts.py, make_blends.py)
 edge-tts>=7.0

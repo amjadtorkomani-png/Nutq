@@ -1,74 +1,141 @@
-# Nutq Listener · سامع النطق: R model (v0.1)
+# Nutq Listener · سامع النطق: R
 
-The first model of the Nutq "listener": it hears one word said by a child and decides whether the **R (ر)** in that word is said correctly.
+The Nutq "listener" hears one word said by a child, together with the word the child was asked to say, and answers:
 
-> **Important:** this model is trained and tested on **synthetic speech only** (text-to-speech voices turned into child-like voices). Its numbers show the method works on that data. They say **nothing yet** about real children. The next milestone is a test on real recordings labelled by speech specialists.
+| Answer | Meaning |
+|---|---|
+| **صح** (correct) | The child said the asked word and the **R (ر)** is right |
+| **قريب** (close) | Not sure: the recording goes to the speech specialist |
+| **غلط** (wrong) | A different word, or another sound in place of the R, or a wrong R |
 
-This folder has three parts:
-
-| Part | Where | What |
-|---|---|---|
-| **1. The model** | [`trained/r_baseline.joblib`](trained/r_baseline.joblib) + [`scripts/`](scripts/) | The trained model, and all the code to rebuild it and use it |
-| **2. The data** | [`data/`](data/) | Word list, every generated utterance, the split, metadata for all 74,336 clips, and audio samples |
-| **3. The results** | [`reports/`](reports/) and the [Results](#4-results) section below | Full evaluation |
+> **Important:** the model is trained on **synthetic speech only** (text-to-speech voices turned into child-like voices). On synthetic test voices it is accurate. On real microphone recordings it is much weaker ([section 5.3](#53-real-recordings)). It is not ready for children. The next step is training and testing on real recordings labelled by speech specialists.
 
 ---
 
 ## Contents
 
-1. [Quick start: use the model](#1-quick-start-use-the-model)
-2. [What the model does](#2-what-the-model-does)
+1. [Quick start](#1-quick-start)
+2. [How it works](#2-how-it-works)
 3. [The data](#3-the-data)
-4. [Results](#4-results)
-5. [Known problem: five voices](#5-known-problem-five-voices)
-6. [The model and its features](#6-the-model-and-its-features)
-7. [Rebuild everything](#7-rebuild-everything)
-8. [Files](#8-files)
-9. [Next steps](#9-next-steps)
+4. [The model](#4-the-model)
+5. [Results](#5-results)
+6. [Rebuild everything](#6-rebuild-everything)
+7. [Files](#7-files)
+8. [Limits and next steps](#8-limits-and-next-steps)
 
 ---
 
-## 1. Quick start: use the model
+## 1. Quick start
 
 ```bash
 pip install -r requirements.txt
-python scripts/predict.py data/samples/w01_رمل_r.wav data/samples/w19_قمر_gh.wav
 ```
+
+The first run downloads the speech model **mHuBERT-147** (about 360 MB) from Hugging Face.
+
+### Command line
+
+```bash
+python scripts/predict.py رمل data/samples/w01_رمل_r.wav data/samples/w01_رمل_y.wav --child
+```
+
+- The first argument is the word the child was asked to say, written plainly or as its id (`w01`).
+- `--child` means the speaker is already a child. Without it, the voice is first converted to a child-like voice, which is the setting for adult testers.
 
 Output on the samples in this folder:
 
-| File | What was said | P(error) | Verdict |
+| File | What was said | Asked word | Answer |
 |---|---|---|---|
-| `w01_رمل_r.wav` | رَمْل (correct) | 0.00 | correct |
-| `w01_رمل_y.wav` | يَمْل (R → Y) | 1.00 | wrong |
-| `w01_رمل_mix-y-35.wav` | R blended 35% towards Y | 0.44 | close → specialist |
-| `w01_رمل_mix-y-65.wav` | R blended 65% towards Y | 0.92 | wrong |
-| `w12_كرة_r.wav` | كُرَة (correct) | 0.00 | correct |
-| `w12_كرة_l.wav` | كُلَة (R → L) | 0.82 | close → specialist |
-| `w12_كرة_mix-l-35.wav` | R blended 35% towards L | 0.00 | correct |
-| `w12_كرة_mix-l-65.wav` | R blended 65% towards L | 0.18 | close → specialist |
-| `w19_قمر_r.wav` | قَمَر (correct) | 0.00 | correct |
-| `w19_قمر_gh.wav` | قَمَغ (R → GH) | 0.93 | wrong |
-| `w19_قمر_y.wav` | قَمَي (R → Y) | 1.00 | wrong |
-| `w19_قمر_mix-gh-65.wav` | R blended 65% towards GH | 0.32 | close → specialist |
+| `w01_رمل_r.wav` | رَمْل | رمل | صح |
+| `w01_رمل_y.wav` | يَمْل (R → ي) | رمل | غلط: heard ي in place of R |
+| `w01_رمل_mix-y-35.wav` | R blended 35% towards ي | رمل | صح |
+| `w01_رمل_mix-y-65.wav` | R blended 65% towards ي | رمل | غلط: heard ي in place of R |
+| `w12_كرة_r.wav` | كُرَة | كرة | صح |
+| `w12_كرة_l.wav` | كُلَة (R → ل) | كرة | غلط: heard ل in place of R |
+| `w12_كرة_mix-l-35.wav` | R blended 35% towards ل | كرة | صح |
+| `w12_كرة_mix-l-65.wav` | R blended 65% towards ل | كرة | صح |
+| `w19_قمر_r.wav` | قَمَر | قمر | صح |
+| `w19_قمر_gh.wav` | قَمَغ (R → غ) | قمر | غلط: heard غ in place of R |
+| `w19_قمر_y.wav` | قَمَي (R → ي) | قمر | غلط: heard ي in place of R |
+| `w19_قمر_mix-gh-65.wav` | R blended 65% towards غ | قمر | صح |
+| `w01_رمل_r.wav` | رَمْل | **قمر** | غلط: a different word |
 
-The verdict uses a **confidence gate**: `correct` if P(error) ≤ 0.1, `wrong` if ≥ 0.9, otherwise `close`, and in the app the clip goes to the specialist.
+### Test app (your own voice)
 
-**Input:** WAV, one word, mono (other sample rates are resampled to 16 kHz).
+```bash
+python scripts/app.py
+```
+
+Then open **http://127.0.0.1:8765** in Chrome or Edge and allow the microphone.
+
+How the app works:
+- The page asks you to say a word, either correctly or with a given error (for example "say ل in place of R": لَمْل).
+- It records you and shows the answer.
+- It also shows whether the answer matches what you were asked to say, and keeps a score.
+- Every recording is saved locally in `data/real/` with `log.csv`. This folder is in `.gitignore`: recordings of people's voices are never committed.
 
 ---
 
-## 2. What the model does
+## 2. How it works
 
-| | |
+```
+recording ─► 16 kHz, silence trimmed ─► child-like voice (adults only) ─► mHuBERT-147 ─► 4608 numbers
+                                                                                            │
+                     ┌──────────────────────────────────────────────────────────────────────┼─────────────────────────┐
+                     ▼                                                                      ▼                         ▼
+              word model                                                               letter model               R model
+         which of the 25 words?                                                 which sound is in the R place?   P(R is wrong)
+                     │                                                                      │                         │
+                     └──────────────────────────────► decision ◄────────────────────────────┴─────────────────────────┘
+```
+
+### 2.1 Audio
+
+| Step | What |
 |---|---|
-| **Input** | Audio of one word. Nothing else: the model is not told which word was asked. |
-| **Output** | Probability that the R is wrong, calibrated, plus a verdict through the confidence gate |
-| **Target sound** | R (ر) |
-| **Errors it learned** | R replaced by 19 other letters (غ ل ي و ب د ن ت ع ج م ه خ ق ك ز ذ ط ح), or R dropped |
-| **Speakers** | Child-like voices (ages 5–9 target), Arabic dialects from 15 countries |
+| Resample | Any sample rate → 16 kHz mono |
+| Trim | Silence trimmed at start and end; 50 ms kept on each side |
+| Child voice | Adult speakers only: Praat "Change gender" with formants ×1.2 and pitch 275 Hz, the middle of the ranges used to make the training voices |
+| Loudness | RMS-normalised, so loudness does not matter |
 
-Why not speech-to-text? A child says **غَمْل** instead of **رَمْل**, and speech-to-text writes "رمل" and marks it correct. The listener judges the **sound**, not the word.
+### 2.2 Embedding: mHuBERT-147
+
+[mHuBERT-147](https://huggingface.co/utter-project/mHuBERT-147) is a speech model pretrained on 147 languages, including Arabic. Its hidden layers encode **which sound is said** more than **how the voice sounds**. That matters here: a correct R said by different voices, tapped or rolled, should look the same.
+
+Each recording becomes **4,608 numbers**:
+
+| Part | Size |
+|---|---|
+| Mean over time of transformer layers 6, 9 and 12 | 3 × 768 |
+| Mean of layer 9 in 3 equal time segments (start, middle, end of the word), so the model knows *where* a sound is | 3 × 768 |
+
+### 2.3 Three models on the same numbers
+
+All three are logistic regressions on standardised embeddings.
+
+| Model | Question | Classes |
+|---|---|---|
+| **R model** | Is the R wrong? | correct / incorrect, probability calibrated |
+| **Word model** | Which word was said? | 25 words; an error version counts as its word (لَمْل → رمل) |
+| **Letter model** | Which sound is in the R place? | ر + 19 letters (غ ل ي و ب د ن ت ع ج م ه خ ق ك ز ذ ط ح) + "no R" |
+
+### 2.4 Decision
+
+Checked in this order:
+
+| # | Rule | Answer |
+|---|---|---|
+| 1 | The word model hears another word, and gives the asked word less than 25% | **غلط** |
+| 2 | The letter model hears another sound than R, with at least 50% | **غلط** |
+| 3 | P(R wrong) < 0.1 | **صح** |
+| 4 | P(R wrong) > 0.9 | **غلط** |
+| 5 | Otherwise | **قريب**: goes to the specialist |
+
+### Why not speech-to-text?
+
+Take a child who says **غَمْل** instead of **رَمْل**:
+- Speech-to-text writes "رمل" and marks it correct.
+- The listener judges the **sound**, so it answers غلط.
 
 ---
 
@@ -76,29 +143,42 @@ Why not speech-to-text? A child says **غَمْل** instead of **رَمْل**, a
 
 No recordings of real children are used or stored. All training data is generated.
 
-### 3.1 How it was made
+### 3.1 How it is made
 
 ```
 25 words  ──►  497 utterances  ──►  TTS (edge-tts)  ──►  in-between R  ──►  child-like voice  ──►  automatic check
               (correct + errors)    44 voices × 2 speeds   (WORLD vocoder)    (Praat, 4 per voice)
 ```
 
-**Step 1: words.** [`data/words_r.csv`](data/words_r.csv) has 25 everyday words a child knows, with R at the start (9), middle (9) and end (7) of the word: رمل، رجل، رأس، رمان، ريشة، رقم، رسم، روبوت، ربيع، أرنب، برتقال، كرة، شجرة، سيارة، طائرة، بقرة، فراشة، قرد، قمر، بحر، نمر، تمر، حجر، نهر، صقر.
+**Words.** [`data/words_r.csv`](data/words_r.csv) has 25 everyday words a child knows, with R at the start (9), middle (9) and end (7):
 
-Rules for the list: one R per word, no غ in the word, and no two words that differ only in the R (so that رول/غول can't both be in the list).
+رمل، رجل، رأس، رمان، ريشة، رقم، رسم، روبوت، ربيع، أرنب، برتقال، كرة، شجرة، سيارة، طائرة، بقرة، فراشة، قرد، قمر، بحر، نمر، تمر، حجر، نهر، صقر
 
-**Step 2: utterances.** [`data/utterances_r.csv`](data/utterances_r.csv), made by `build_utterances.py`. For every word: the correct form, plus R replaced by each of 19 letters, plus R deleted. A variant is dropped if it can't be pronounced (كُرَة without R → "كُة") or if it doubles a neighbour letter. Result: **497 utterances (25 correct, 472 errors)**, all with full diacritics.
+Rules for the list:
+- One R per word.
+- No غ in the word.
+- No two words that differ only in the R.
 
-TTS spelling fix: edge TTS dropped the final vowel of words ending in ة (فراشة was read "فراش", كرة "كُر"). The final ة is written as ه for the TTS only (كُرَه), checked by ear.
+**Utterances.** [`data/utterances_r.csv`](data/utterances_r.csv), made by `build_utterances.py`. For every word it holds:
+- the correct form,
+- the R replaced by each of 19 letters,
+- the R deleted.
 
-**Step 3: adult TTS voices.** `generate_tts.py`, using edge-tts.
-- 32 Arabic voices from 16 countries, plus 12 "Multilingual" foreign voices, each at normal speed and 20% slower.
-- Per word and voice: the correct form plus 4 sampled errors (common errors ل غ ي و and deletion are picked twice as often).
-- **11,085 adult clips**, 16 kHz mono.
+A variant is dropped if it can't be pronounced or if it doubles a neighbouring letter. Result: **497 utterances (25 correct, 472 errors)**, all with full diacritics. For the TTS only, a final ة is written as ه so that the voices pronounce it.
 
-**Step 4: in-between R sounds.** `make_blends.py`. Real children often say a sound *between* R and another letter. For one voice and word, the correct clip and an error clip (ل غ ي و) are aligned with DTW, the region where they differ (the R) is found, and inside it the WORLD vocoder spectral envelope is mixed at 35% and 65%. Both originals are also passed through the vocoder, so vocoder artefacts appear in every class. **7,499 clips.**
+**Adult voices.** `generate_tts.py`, with edge-tts:
+- 32 Arabic voices from 16 countries, plus 12 multilingual voices, each at normal speed and 20% slower.
+- Per word and voice: the correct form plus 4 sampled errors.
+- **11,085 clips**.
 
-**Step 5: child-like voices.** `childify.py`, using Praat "Change gender". Each source voice becomes 4 "virtual children" with their own fixed settings:
+**In-between R.** `make_blends.py`. Children often say a sound *between* R and another letter.
+- The correct clip and an error clip (ل غ ي و) of the same voice are aligned with DTW.
+- The region where they differ (the R) is found.
+- Inside that region, the WORLD vocoder spectral envelope is mixed at 35% and 65%.
+- The originals are also passed through the vocoder, so vocoder artefacts appear in every class.
+- **7,499 clips**.
+
+**Child-like voices.** `childify.py`, with Praat "Change gender". Each source voice becomes 4 "virtual children", each with fixed settings:
 
 | Setting | Range | Why |
 |---|---|---|
@@ -107,196 +187,127 @@ TTS spelling fix: edge TTS dropped the final vowel of words ending in ة (فرا
 | Pitch range | ×0.8 to ×1.4 | Flat or lively intonation |
 | Speed | ×1.00 to ×1.25 | Children often speak slower |
 
-Checked by measurement: the measured spectral stretch matches the setting (correlation 0.99). **74,336 child-like clips.**
+Result: **74,336 child-like clips**.
 
-**Step 6: automatic check.** `check_child.py` reads every clip: broken file, too short, no voiced part, or F0 outside 180–400 Hz. 170 clips flagged and excluded ([`data/excluded_clips.txt`](data/excluded_clips.txt)).
+**Automatic check.** `check_child.py` flags a clip that is broken, too short, has no voiced part, or has F0 outside 180–400 Hz. 170 clips are excluded ([`data/excluded_clips.txt`](data/excluded_clips.txt)).
 
-### 3.2 Checked by ear
+**Checked by ear.** Three voices (ar-AE-Fatima, ar-LB-Layla, ar-SA-Zariyah) say "ارمل" for رمل and "عجل" for رجل. They are excluded ([`data/excluded_voices.txt`](data/excluded_voices.txt)).
 
-| Problem found | Fix |
-|---|---|
-| ة not pronounced at word end | Final ة written as ه for the TTS |
-| 3 voices (ar-AE-Fatima, ar-LB-Layla, ar-SA-Zariyah) said "ارمل" for رمل and "عجل" for رجل, already in the adult TTS | Voices excluded ([`data/excluded_voices.txt`](data/excluded_voices.txt)) |
-| Free text-to-speech model MMS sounded poor | Removed |
-| Strongest formant shift (×1.32) sounded damaged | Maximum lowered to ×1.28 |
-
-### 3.3 The split
+### 3.2 The split
 
 [`data/splits.csv.gz`](data/splits.csv.gz), made by `make_splits.py`. A voice is never on both sides: all its speeds and virtual children stay together.
 
 | Set | Clips | Content | Used for |
 |---|---|---|---|
-| `train` | 32,834 | Correct + errors (incl. vocoder copies), 23 Arabic voices, 5 folds by voice | Training and cross-validation |
-| `test_voices` | 8,503 | Same kind, 6 Arabic voices (3 male, 3 female) never seen in training | Final test |
-| `confidence` | 14,931 | In-between R sounds | **Not trained on.** Tests that confidence drops as R is blended |
-| `held_foreign` | 11,975 | Foreign voices | Held out: their "correct" R is not verified, and training on their errors only would teach "foreign accent = error" |
+| `train` | 32,834 | 23 Arabic voices, 5 folds by voice | Training and calibration |
+| `test_voices` | 8,503 | 6 Arabic voices (3 male, 3 female) never seen in training | Test |
+| `confidence` | 14,931 | In-between R sounds | Not trained on |
+| `held_foreign` | 11,975 | Multilingual voices | Held out: their R is not verified |
 | `excluded` | 6,093 | Excluded voices and clips | Not used |
 
-Training labels: 8,374 correct and 24,460 errors (class weights balance them).
-
-### 3.4 What is in this repository
+### 3.3 What is in this folder
 
 | File | Rows | Content |
 |---|---|---|
 | `data/words_r.csv` | 25 | Word list |
 | `data/utterances_r.csv` | 497 | Every utterance with label, replaced letter and TTS text |
 | `data/splits.csv.gz` | 74,336 | Set and fold of every clip |
-| `data/metadata/raw_tts.csv` | 11,085 | Adult TTS clips: voice, speed, text, label, duration, loudness |
-| `data/metadata/blends.csv` | 7,499 | In-between clips: blend amount and the detected R region |
-| `data/metadata/child.csv.gz` | 74,336 | Child-like clips: source clip, formant / pitch / speed settings |
+| `data/metadata/raw_tts.csv` | 11,085 | Adult TTS clips |
+| `data/metadata/blends.csv` | 7,499 | In-between clips: blend amount and R region |
+| `data/metadata/child.csv.gz` | 74,336 | Child-like clips: source clip and voice settings |
 | `data/metadata/child_check.csv` | 170 | Clips flagged by the automatic check |
 | `data/samples/` | 12 | Example WAV files (see `samples.csv`) |
 
-**Not in the repository:** the 1.5 GB of audio and the 57 MB feature file. Both are rebuilt by the scripts ([section 7](#7-rebuild-everything)).
+**Not in the repository:** the audio (1.5 GB) and the embeddings (520 MB). The scripts rebuild both ([section 6](#6-rebuild-everything)).
 
 ---
 
-## 4. Results
+## 4. The model
 
-All numbers below are on synthetic data. Full report: [`reports/baseline_report.md`](reports/baseline_report.md); all numbers: [`reports/baseline_metrics.json`](reports/baseline_metrics.json).
+All three classifiers are trained by `scripts/train_model.py` and saved in **one file**: [`trained/nutq_r.joblib`](trained/nutq_r.joblib) (1.2 MB). The speech model itself is not in it; it is loaded from Hugging Face.
 
-"Error" is the positive class. **False rejection** = a correct word marked wrong (bad for the child). **Missed errors** = a wrong R marked correct.
-
-### 4.1 Overall
-
-| Measure | Cross-validation (by voice) | **Test: 6 unseen voices** | Baseline (logistic regression), test |
-|---|---|---|---|
-| Balanced accuracy | 91.0% | **93.1%** | 84.5% |
-| Errors caught (recall) | 98.7% | **98.7%** | 87.5% |
-| False rejection | 16.6% | **12.6%** | 18.4% |
-| AUC | 97.5% | **97.8%** | 91.7% |
-
-Calibration error (ECE) on the test voices: 0.025 before, 0.016 after isotonic calibration.
-
-### 4.2 Confidence gate (test voices)
-
-| "Correct" if P(error) ≤ | "Wrong" if ≥ | Sent to specialist | False rejection | Missed errors |
-|---|---|---|---|---|
-| 0.5 | 0.5 | 0.0% | 12.4% | 1.4% |
-| 0.3 | 0.7 | 2.6% | 11.1% | 0.8% |
-| 0.2 | 0.8 | 4.5% | 9.9% | 0.7% |
-| **0.1** | **0.9** | **14.0%** | **4.9%** | **0.2%** |
-
-Project targets: < 15% sent to specialist, < 10% false rejection. The 0.1 / 0.9 gate meets both **on this synthetic data**.
-
-### 4.3 Each error type (test voices)
-
-| Said instead of R | Caught | | Said instead of R | Caught |
-|---|---|---|---|---|
-| ع | 88.8% | | غ | 99.1% |
-| ق | 95.7% | | م | 99.5% |
-| خ | 96.7% | | ب د ذ ه ح ج ت ط ي ز | 100% |
-| ن | 97.9% | | | |
-| ل | 98.1% | | | |
-| deleted | 98.5% | | | |
-| و | 98.9% | | | |
-| ك | 99.0% | | | |
-
-### 4.4 Letters the model never saw
-
-Five replacement letters (ز ق م ع خ) were removed from training and tested: **88.1%** of them caught (96.0% when trained on them). The model learned "this is not an R", not a list of specific letters.
-
-### 4.5 In-between R sounds (never trained on)
-
-| Blended towards | Amount | Mean P(error) | In the "unsure" zone (0.2–0.8) |
-|---|---|---|---|
-| ل | 0% (pure R) → 35% → 65% | 0.12 → 0.18 → 0.42 | 4% → 9% → 34% |
-| غ | 0% → 35% → 65% | 0.12 → 0.18 → 0.37 | 4% → 12% → 34% |
-| ي | 0% → 35% → 65% | 0.12 → 0.23 → 0.60 | 4% → 18% → 34% |
-| و | 0% → 35% → 65% | 0.12 → 0.20 → 0.51 | 4% → 13% → 40% |
-
-Confidence moves the right way: the further the R is blended, the higher P(error), and the more clips land in the zone that goes to the specialist.
-
-### 4.6 By position and word
-
-| R position | Balanced accuracy | False rejection |
-|---|---|---|
-| Start | 95.1% | 8.6% |
-| Middle | 92.3% | 13.9% |
-| End | 91.6% | 15.9% |
-
-Weakest words: برتقال (88.8%), طائرة (89.5%), شجرة (90.0%), قرد (90.1%), رجل (90.2%).
-
-### 4.7 Which features carry the result
-
-Each feature family alone, trained and tested the same way:
-
-| Family | Features | Balanced accuracy |
-|---|---|---|
-| `melgrid`: coarse time × frequency picture | 144 | 91.9% |
-| `spec`: spectral shape | 36 | 87.4% |
-| `mfcc` | 78 | 85.3% |
-| `voice`: F0, voicing, HNR | 11 | 74.2% |
-| `mod`: tongue trill (15–35 Hz ripple) | 10 | 72.8% |
-
-The trill features are weaker than expected, likely because TTS voices mostly say a single-tap R rather than a rolled R.
-
----
-
-## 5. Known problem: five voices
-
-False rejection is **not** spread evenly. Almost all of it comes from five voices:
-
-| Voice | Correct words marked wrong |
+| Part | Training |
 |---|---|
-| ar-SY-Laith | 86% |
-| ar-OM-Aysha | 85% |
-| ar-SY-Amany (test voice) | 72% |
-| ar-EG-Shakir | 58% |
-| ar-OM-Abdullah | 55% |
-| Other 24 Arabic voices | mostly 0–10% |
+| `r_model` | StandardScaler + LogisticRegression (C = 0.05, balanced classes), all 32,834 train clips |
+| `calibrator` | Isotonic regression on 5-fold out-of-fold predictions (folds = voices), so P(R wrong) is a real probability |
+| `word_model` | StandardScaler + LogisticRegression (C = 0.02), up to 28 clips per utterance (13,050 clips), no in-between clips |
+| `letter_model` | Same as `word_model`, with the replaced letter as the label |
+| `thresholds` | `lo` 0.1, `hi` 0.9, `word_min` 0.25, `letter_min` 0.5 |
 
-**Their R was checked by ear and is correct.** So the model is too strict: it learned one shape of R from most voices, and rejects a correct R said a different way. A hint (not proven): these voices have less 15–35 Hz trill ripple, so their R is closer to a single tap.
-
-**Tried and did not help:** removing the voice's static colour from the features (subtracting the per-band mean over time). False rejection stayed 12.5–13.2% and the same voices stayed rejected ([`reports/exp_voice_robustness.log`](reports/exp_voice_robustness.log)).
-
-**Why it matters:** real children's correct R will vary even more than these voices. This is the main thing to fix before testing on real children.
-
----
-
-## 6. The model and its features
-
-### Features: `scripts/extract_features.py`, 280 per clip
-
-The model does not know where the R is, so every family is computed over the whole word **and** over 6 equal time segments.
-
-| Family | Count | What |
-|---|---|---|
-| `melgrid` | 144 | Mean log-mel energy: 24 bands × 6 time segments |
-| `mfcc` | 78 | 13 MFCC + delta + delta-delta, mean and std |
-| `spec` | 36 | Spectral centroid, spread, rolloff, flatness, zero-crossing rate, energy (whole word and per segment) |
-| `mod` | 10 | Modulation of the 300–3000 Hz envelope: share of 2–8 / 8–15 / 15–35 / 35–60 Hz, trill strength and position, peaks, dips |
-| `voice` | 11 | F0 median and variation, voicing ratio, voiced regions, HNR (whole word and per segment) |
-| `dur_s` | 1 | Duration |
-
-Audio is RMS-normalised first, so loudness does not matter.
-
-### Classifier: `scripts/train_baseline.py`
-
-| | |
-|---|---|
-| Model | scikit-learn `HistGradientBoostingClassifier` (400 iterations, learning rate 0.08, 31 leaves, L2 = 1.0, balanced class weights) |
-| Baseline | Standardisation + logistic regression |
-| Calibration | Isotonic regression fitted on out-of-fold predictions |
-| Saved as | `trained/r_baseline.joblib`: a dict with `model`, `calibrator`, `feature_names`, `positive_class` |
-
-Load it in Python:
+Use it in Python:
 
 ```python
-import joblib, soundfile as sf
-from scripts.extract_features import features
+import sys; sys.path.insert(0, "scripts")
+import listener
 
-bundle = joblib.load("trained/r_baseline.joblib")
-y, sr = sf.read("data/samples/w01_رمل_r.wav")          # 16 kHz mono
-x = features(y)[None, :]
-p_error = bundle["calibrator"].predict(bundle["model"].predict_proba(x)[:, 1])[0]
+L = listener.Listener()                                    # loads mHuBERT-147 + trained/nutq_r.joblib
+r = L.judge("data/samples/w01_رمل_y.wav", target_word="w01", adult=False)
+print(r["verdict"], r["reason"], round(r["p_error"], 2), r["heard_word"], r["letter"])
+# incorrect letter 1.0 w01 y
 ```
+
+`reason` says why the answer is غلط:
+- `word`: a different word
+- `letter`: another sound in the R place
+- `r`: the R model
 
 ---
 
-## 7. Rebuild everything
+## 5. Results
 
-Run from this `model/` folder, in order. The scripts write into `data/raw/`, `data/blend/`, `data/child/`, `data/features/`.
+All numbers are in [`reports/model_metrics.json`](reports/model_metrics.json).
+
+### 5.1 Test: 6 synthetic voices the model never saw (8,503 clips)
+
+**The whole listener**, each clip judged against its own word:
+
+| Clips | صح | قريب | غلط |
+|---|---|---|---|
+| Correct words (R right) | **88.8%** | 4.3% | 6.9% |
+| Words with an error | 0.1% | 1.0% | **99.0%** |
+| Correct words, but a different word was asked | 0.0% | 0.1% | **99.9%** |
+
+When a correct word is wrongly marked غلط, most of these come from the letter rule (97 clips). The word rule causes 30 and the R model 22.
+
+### 5.2 Each model alone (same test voices)
+
+| Model | Measure | Result |
+|---|---|---|
+| R model | Balanced accuracy (at P = 0.5) | 96.8% |
+| | Correct words marked wrong | 5.5% |
+| | Errors missed | 0.9% |
+| | AUC | 99.0% |
+| Word model | Right word | 97.7% |
+| Letter model | Right sound in the R place (all clips) | 86.0% |
+| | Right sound, error clips only | 84.0% |
+
+The letter model mostly confuses sounds that are close:
+
+| Said | Taken for |
+|---|---|
+| ذ | ز |
+| م | ن |
+| ط | ت |
+| ق | no R |
+
+### 5.3 Real recordings
+
+These are 54 recordings made with the test app by one adult team member on a laptop microphone:
+- 45 asked to be said correctly,
+- 9 asked with a given error.
+
+| Asked to say | صح | قريب | غلط |
+|---|---|---|---|
+| Correctly (45) | 28.9% | 8.9% | **62.2%** |
+| With an error (9) | 22.2% | 0.0% | **77.8%** |
+
+On real recordings, most correct words are marked wrong. The models learned from synthetic voices only, and a real voice through a real microphone is different from them. **Closing this gap is the main work before any use with children.**
+
+---
+
+## 6. Rebuild everything
+
+Run from this `model/` folder, in order. The scripts write into `data/raw/`, `data/blend/`, `data/child/` and `data/features/`.
 
 | Step | Command | Time on a 4-core laptop |
 |---|---|---|
@@ -304,64 +315,63 @@ Run from this `model/` folder, in order. The scripts write into `data/raw/`, `da
 | 2. Adult TTS clips | `python scripts/generate_tts.py --engines edge --multilingual --rates "+0%,-20%" --errors-per-word 4` | ~40 min (internet) |
 | 3. In-between R | `python scripts/make_blends.py` | ~25 min |
 | 4. Child-like voices | `python scripts/childify.py --children-per-voice 4 --workers 16` | 1–3 h (disk-bound) |
-| 5. Check | `python scripts/check_child.py --fix` then `childify.py` again, then `check_child.py --recheck` | ~10 min |
+| 5. Check | `python scripts/check_child.py --fix`, then `childify.py` again, then `check_child.py --recheck` | ~10 min |
 | 6. Split | `python scripts/make_splits.py` | seconds |
-| 7. Features | `python scripts/extract_features.py --workers 4` | ~15 min |
-| 8. Train + report | `python scripts/train_baseline.py` | ~10 min |
-
-Listening pages for checking by ear: `python scripts/make_review.py` (writes an HTML page with the audio embedded).
+| 7. Embeddings | `python scripts/extract_embeddings.py`, then `python scripts/extract_embeddings.py --merge` | ~3–4 h on CPU (resumable) |
+| 8. Train + measure | `python scripts/train_model.py` | ~10 min |
 
 Notes:
-- The scripts ask Windows not to sleep while they run (they do not change any setting). A closed laptop lid still sleeps.
-- TTS voices are an online service: generated audio can differ slightly between runs.
-- `excluded_voices.txt`, `excluded_clips.txt` and the split come from checks by ear; rebuilding the audio does not redo those checks.
+- `make_review.py` writes HTML listening pages (audio embedded) for checking clips by ear.
+- The scripts ask Windows not to sleep while they run. A closed laptop lid still sleeps.
+- TTS voices are an online service, so the audio can differ slightly between runs.
+- `excluded_voices.txt` and `excluded_clips.txt` come from checks by ear. Rebuilding the audio does not redo them.
 
 ---
 
-## 8. Files
+## 7. Files
 
 ```
 model/
 ├── README.md                    this file
 ├── requirements.txt
+├── run_app.bat                  Windows: start the test app and open it
 ├── trained/
-│   └── r_baseline.joblib        the trained model + calibrator
+│   └── nutq_r.joblib            r_model + calibrator + word_model + letter_model + thresholds
 ├── scripts/
-│   ├── predict.py               check the R in WAV files
-│   ├── build_utterances.py      words -> correct + error utterances
-│   ├── generate_tts.py          utterances -> adult TTS clips (edge / Azure / ElevenLabs)
-│   ├── make_blends.py           in-between R sounds (DTW + WORLD vocoder)
-│   ├── childify.py              adult -> child-like voices (Praat)
+│   ├── listener.py              audio → embedding → 3 models → صح / قريب / غلط
+│   ├── predict.py               judge WAV files from the command line
+│   ├── app.py                   local test app (server)
+│   ├── train_model.py           training + measurement → trained model, reports/model_metrics.json
+│   ├── extract_embeddings.py    mHuBERT-147 embeddings of all clips
+│   ├── build_utterances.py      words → correct + error utterances
+│   ├── generate_tts.py          utterances → adult TTS clips
+│   ├── make_blends.py           in-between R (DTW + WORLD vocoder)
+│   ├── childify.py              adult → child-like voices (Praat)
 │   ├── check_child.py           automatic check of every clip
 │   ├── make_splits.py           train / test / confidence split by voice
-│   ├── extract_features.py      280 features per clip
-│   ├── train_baseline.py        training, evaluation, report
-│   ├── exp_robust.py            experiment: voice-colour removal (section 5)
 │   ├── make_review.py           HTML listening pages
-│   └── *.bat                    Windows runners for the long steps
+│   └── *.bat                    Windows runners for the long data steps
+├── app/
+│   └── index.html               the test app page
 ├── data/
-│   ├── words_r.csv
-│   ├── utterances_r.csv
-│   ├── splits.csv.gz
-│   ├── excluded_voices.txt
-│   ├── excluded_clips.txt
+│   ├── words_r.csv, utterances_r.csv, splits.csv.gz
+│   ├── excluded_voices.txt, excluded_clips.txt
 │   ├── metadata/                raw_tts.csv, blends.csv, child.csv.gz, child_check.csv
 │   └── samples/                 12 example WAV files + samples.csv
 └── reports/
-    ├── baseline_report.md
-    ├── baseline_metrics.json
-    └── exp_voice_robustness.log
+    └── model_metrics.json
 ```
 
 ---
 
-## 9. Next steps
+## 8. Limits and next steps
 
-1. **Fix the strict-R problem (section 5).** In progress: features from a pretrained multilingual speech model (mHuBERT-147, trained on 147 languages incl. Arabic), which should treat a tapped and a rolled R as the same sound.
-2. **Verify the foreign voices** by ear and, if their R is correct, add them back to training.
-3. **Test on real speech:** first the team's own recordings imitating errors, then children's recordings labelled by two specialists (needs ethics approval and parent consent).
-4. **S sound (س)** with the same pipeline.
-5. **Know the word:** in the real game the app knows which word it asked. Giving the model that information should make it simpler and more accurate.
+| Limit | Next step |
+|---|---|
+| Trained on synthetic voices only; weak on real recordings ([5.3](#53-real-recordings)) | Train with real recordings: first the team's own (collected with the test app), then children's recordings labelled by two specialists (needs ethics approval and parent consent) |
+| The letter rule rejects some correct words | Tune `letter_min` on real recordings |
+| One target sound | S (س) with the same pipeline |
+| Runs on a laptop CPU (~0.2 s per word) | Smaller model for checking on the phone |
 
 ---
 
